@@ -1,5 +1,6 @@
 const apiClient = require('../utils/apiClient');
 const CryptoJS = require('crypto-js');
+const tourActivityHelper = require('../helpers/tourActivities.helper')
 
 
 class hotelBedsActivityService {
@@ -40,6 +41,36 @@ class hotelBedsActivityService {
         });
         return response.data.countries;
     }
+
+    async getAvailability(payload) {
+        const request = tourActivityHelper.searchRequest(payload);
+        this.config.metadata.section = 'hotel beds country api';
+        const response = await this.api.post(`activity-api/3.0/activities/availability`,request, {
+            ...this.config,
+            headers: {
+                ...this.api.defaults.headers,
+                'X-Signature': this.generateSignature(),
+            }
+        });
+        return response.data;
+    }
+
+
+    async getActivityDetails(payload) {
+        const request = tourActivityHelper.detailsRequest(payload);
+        this.config.metadata.section = 'hotel beds country api';
+        const response = await this.api.post(`activity-api/3.0/activities/details`,request, {
+            ...this.config,
+            headers: {
+                ...this.api.defaults.headers,
+                'X-Signature': this.generateSignature(),
+            }
+        });
+        return response.data;
+    }
+
+
+    
 }
 
 module.exports = new hotelBedsActivityService();

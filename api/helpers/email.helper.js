@@ -188,17 +188,17 @@ class EmailHelpers {
                 const templatePath = path.join(__dirname, '../views/', 'downloadpdf.ejs');
                 const html = await ejs.renderFile(templatePath, { data: attachment });
 
-                // const browser = await puppeteer.launch({
-                //     args: ['--no-sandbox', '--disable-setuid-sandbox'],
-                //     headless: true,
-                // });
                 const browser = await puppeteer.launch({
-                    args: chromium.args,
-                    defaultViewport: chromium.defaultViewport,
-                    executablePath: await chromium.executablePath(),
-                    headless: chromium.headless,
-                    ignoreHTTPSErrors: true,
+                    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+                    headless: true,
                 });
+                // const browser = await puppeteer.launch({
+                //     args: chromium.args,
+                //     defaultViewport: chromium.defaultViewport,
+                //     executablePath: await chromium.executablePath(),
+                //     headless: chromium.headless,
+                //     ignoreHTTPSErrors: true,
+                // });
 
                 const page = await browser.newPage();
                 await page.setContent(html, { waitUntil: 'networkidle0' });

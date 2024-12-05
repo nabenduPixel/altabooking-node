@@ -10,5 +10,6 @@ router.post('/auth/login', authController.login);
 const TourActivitiesController = require('../controllers/tourActivities.controller');
 
 router.get('/tour-activities/countries', TourActivitiesController.getCountries);
+router.post('/tour-activities/search-activities', TourActivitiesController.searchActivities);
 
 module.exports = router;
